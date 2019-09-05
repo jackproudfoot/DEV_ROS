@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  workspace:
+    image: ros:kinetic-ros-core
+    volumes:
+      - ./src:/root/catkin_ws/src
+    stdin_open: true
+    tty: true
+    
+

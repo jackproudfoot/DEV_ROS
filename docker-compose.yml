@@ -1,0 +1,47 @@
+version: '2'
+
+networks:
+  ros:
+    driver: bridge
+
+services:
+  ros-master:
+    image: ros:kinetic-ros-core
+    command: stdbuf -o L roscore
+    networks:
+      - ros
+    restart: always
+
+  turtle-sim:
+    image: osrf/ros:kinetic-desktop
+    depends_on:
+      - ros-master
+    environment:
+      - "ROS_MASTER_URI=http://ros-master:11311"
+      - "ROS_HOSTNAME=ros_docker_turtle-sim_1"
+      #- "ROS_IP=172.21.0.4"
+      - "DISPLAY=10.197.164.249:0"
+    networks:
+      - ros
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    stdin_open: true
+    tty: true
+
+  turtle-sim-teleop:
+    image: osrf/ros:kinetic-desktop
+    depends_on:
+      - ros-master
+    environment:
+      - "ROS_MASTER_URI=http://ros-master:11311"
+      - "ROS_HOSTNAME=ros_docker_turtle-sim-teleop_1"
+      #- "ROS_IP=172.21.0.3"
+      - "ROS_PACKAGE_PATH=/catkin_ws/build"
+    networks:
+      - ros
+    volumes:
+      - ./src:/catkin_ws/src
+    stdin_open: true
+    tty: true
+    
+
