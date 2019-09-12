@@ -22,3 +22,12 @@ or
 cd ~/catkin_ws
 catkin_make
 ```
+
+To restart or stop the docker containers run the following commands from a local bash terminal 
+```bash
+docker-compose restart
+```
+or
+```bash
+docker-compose down
+```
